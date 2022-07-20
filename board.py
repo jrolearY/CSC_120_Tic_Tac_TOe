@@ -1,122 +1,64 @@
-import random
+def tic_tac_toe():
+    board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    end = False
+    win_commbinations = ((0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6))
 
-class TicTacToe:
-
-    def __init__(self):
-        self.board = []
-
-    def create_board(self):
-        for i in range(3):
-            row = []
-            for j in range(3):
-                row.append('-')
-            self.board.append(row)
-
-    def get_random_first_player(self):
-        return random.randint(0, 1)
-
-    def fix_spot(self, row, col, player):
-        self.board[row][col] = player
-
-    def is_player_win(self, player):
-        win = None
-
-        n = len(self.board)
-
-        # checking rows
-        for i in range(n):
-            win = True
-            for j in range(n):
-                if self.board[i][j] != player:
-                    win = False
-                    break
-            if win:
-                return win
-
-        # checking columns
-        for i in range(n):
-            win = True
-            for j in range(n):
-                if self.board[j][i] != player:
-                    win = False
-                    break
-            if win:
-                return win
-
-        # checking diagonals
-        win = True
-        for i in range(n):
-            if self.board[i][i] != player:
-                win = False
-                break
-        if win:
-            return win
-
-        win = True
-        for i in range(n):
-            if self.board[i][n - 1 - i] != player:
-                win = False
-                break
-        if win:
-            return win
-        return False
-
-        for row in self.board:
-            for item in row:
-                if item == '-':
-                    return False
-        return True
-
-    def is_board_filled(self):
-        for row in self.board:
-            for item in row:
-                if item == '-':
-                    return False
-        return True
-
-    def swap_player_turn(self, player):
-        return 'X' if player == 'O' else 'O'
-
-    def show_board(self):
-        for row in self.board:
-            for item in row:
-                print(item, end=" ")
-            print()
-
-    def start(self):
-        self.create_board()
-
-        player = 'X' if self.get_random_first_player() == 1 else 'O'
-        while True:
-            print(f"Player {player} turn")
-
-            self.show_board()
-
-            # taking user input
-            row, col = list(
-                map(int, input("Enter row and column numbers to fix spot: ").split()))
-            print()
-
-            # fixing the spot
-            self.fix_spot(row - 1, col - 1, player)
-
-            # checking whether current player is won or not
-            if self.is_player_win(player):
-                print(f"Player {player} wins the game!")
-                break
-
-            # checking whether the game is draw or not
-            if self.is_board_filled():
-                print("Match Draw!")
-                break
-
-            # swapping the turn
-            player = self.swap_player_turn(player)
-
-        # showing the final view of board
+    def draw():
+        print(board[0], board[1], board[2])
+        print(board[3], board[4], board[5])
+        print(board[6], board[7], board[8])
         print()
-        self.show_board()
 
+    def p1():
+        n = choose_number()
+        if board[n] == "X" or board[n] == "O":
+            print("\nTry again")
+            p1()
+        else:
+            board[n] = "X"
 
-tic_tac_toe = TicTacToe()
-tic_tac_toe.start()
+    def p2():
+        n = choose_number()
+        if board[n] == "X" or board[n] == "O":
+            print("\nTry again")
+            p2()
+        else:
+            board[n] = "O"
+
+    def choose_number():
+        while True:
+            while True:
+                a = input()
+                try:
+                    a  = int(a)
+                    a -= 1
+                    if a in range(0, 9):
+                        return a
+                    else:
+                        print("\nTry again")
+                        continue
+                except ValueError:
+                   print("\nTry again")
+                   continue
+
+    while not end:
+        draw()
+        end = check_board()
+        if end == True:
+            break
+        print("Player 1's turn'")
+        p1()
+        print()
+        draw()
+        end = check_board()
+        if end == True:
+            break
+        print("Player 2's turn'")
+        p2()
+        print()
+
+    if input("Play again (y/n)\n") == "y":
+        print()
+        tic_tac_toe()
+
+tic_tac_toe()
