@@ -41,7 +41,7 @@ def tic_tac_toe():
                    print("\nTry again")
                    continue
 
-def check_board():
+    def check_board():
         count = 0
         for a in win_commbinations:
             if board[a[0]] == board[a[1]] == board[a[2]] == "X":
